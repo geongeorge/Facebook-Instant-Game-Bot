@@ -7,7 +7,7 @@ const
   app = express().use(bodyParser.json()); // creates express http server
 
 app.get("/",(req,res)=> {
-    res.send("hello")
+    res.send("hello");
 })
 
   // Creates the endpoint for our webhook 
@@ -65,6 +65,7 @@ app.get('/webhook', (req, res) => {
     }
   });
 
+const myport = process.env.PORT || 1337;
 
 // Sets server port and logs message on success
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+app.listen(myport, () => console.log('webhook is listening at '+myport));
