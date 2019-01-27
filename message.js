@@ -9,18 +9,24 @@ sendMessage = function(senderId, contextId, msg, btn) {
           "id":senderId
         },
         "message":{
-          "text":msg
-        },
-        "buttons": [
-            {
-                "type":"game_play",
-                "title":btn,
-                "payload":"{}",
-                "game_metadata": { // Only one of the below
-                    "player_id": senderId
+          "attachment":{
+            "type":"template",
+            "payload":{
+              "template_type":"button",
+              "text":"Try the game play button!",
+              "buttons":[
+                {
+                  "type":"game_play",
+                  "title":"Play",
+                  "payload":"{}",
+                  "game_metadata": { 
+                    "player_id": "4590736473645"
+                  }
                 }
+              ]
             }
-        ]
+          }
+        }
       }
 
     axios.post(API_URL, {
