@@ -8,6 +8,7 @@ const
   msg = require("./message"),
   app = express().use(bodyParser.json()); // creates express http server
 
+
 app.get("/",(req,res)=> {
     res.send("hello");
 })
@@ -17,7 +18,8 @@ app.post('/webhook', (req, res) => {
  
   let event = req.body;
 
-  console.log(event)
+  console.dir(event, { depth: null })
+  // console.log(event)
 
   if (event.game_play) {
     var senderId = event.sender.id; // Messenger sender id
