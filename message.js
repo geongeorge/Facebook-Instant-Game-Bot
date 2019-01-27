@@ -41,7 +41,7 @@ sendMessage = function(senderId, contextId, msg, btn) {
         // dispatch({type: FOUND_USER, data: response.data[0]})
     })
     .catch((error) => {
-        console.log(error)
+        console.log(error.response)
         // dispatch({type: ERROR_FINDING_USER})
     })
 }
