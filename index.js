@@ -4,6 +4,8 @@
 const
   express = require('express'),
   bodyParser = require('body-parser'),
+  axios = require('axios'),
+  message = require("./message"),
   app = express().use(bodyParser.json()); // creates express http server
 
 app.get("/",(req,res)=> {
@@ -13,28 +15,42 @@ app.get("/",(req,res)=> {
   // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
  
-  let body = req.body;
+  let event = req.body;
 
-  console.log(body)
+  console.log(event)
 
-  // Checks this is an event from a page subscription
-  if (body.object === 'page') {
-
-    // Iterates over each entry - there may be multiple if batched
-    body.entry.forEach(function(entry) {
-
-      // Gets the message. entry.messaging is an array, but 
-      // will only ever contain one message, so we get index 0
-      let webhook_event = entry.messaging[0];
-      console.log(webhook_event);
-    });
-
-    // Returns a '200 OK' response to all requests
-    res.status(200).send('EVENT_RECEIVED');
-  } else {
-    // Returns a '404 Not Found' if event is not from a page subscription
-    res.sendStatus(404);
+  if (event.game_play) {
+    var senderId = event.sender.id; // Messenger sender id
+    var playerId = event.game_play.player_id; // Instant Games player id
+    var contextId = event.game_play.context_id; 
+    // var payload = event.game_play.payload;
+    // var playerWon = payload['playerWon'];
+    message.sendMessage(
+      senderId, 
+      contextId, 
+      'Congratulations on your victory!', 
+      'Play Again'
+    );
   }
+
+  // // Checks this is an event from a page subscription
+  // if (body.object === 'page') {
+
+  //   // Iterates over each entry - there may be multiple if batched
+  //   body.entry.forEach(function(entry) {
+
+  //     // Gets the message. entry.messaging is an array, but 
+  //     // will only ever contain one message, so we get index 0
+  //     let webhook_event = entry.messaging[0];
+  //     console.log(webhook_event);
+  //   });
+
+  //   // Returns a '200 OK' response to all requests
+  //   res.status(200).send('EVENT_RECEIVED');
+  // } else {
+  //   // Returns a '404 Not Found' if event is not from a page subscription
+  //   res.sendStatus(404);
+  // }
 
 });
 
@@ -86,3 +102,22 @@ function handlePostback(sender_psid, received_postback) {
 function callSendAPI(sender_psid, response) {
   
 }
+
+
+// {
+//   "sender": {
+//     "id": "<PSID>"
+//   },
+//   "recipient": {
+//     "id": "<PAGE_ID>"
+//   },
+//   "timestamp": 1469111400000,
+//   "game_play": {
+//     "game_id": "<GAME-APP-ID>",
+//     "player_id": "<PLAYER-ID>",
+//     "context_type": "<CONTEXT-TYPE:SOLO|THREAD>",
+//     "context_id": "<CONTEXT-ID>", # If a Messenger Thread context
+//     "score": <SCORE-NUM>, # If a classic score based game
+//     "payload": "<PAYLOAD>" # If a rich game
+//   }
+// }
