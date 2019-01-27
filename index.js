@@ -18,6 +18,8 @@ app.post('/webhook', (req, res) => {
  
   let body = req.body;
 
+  console.log(body)
+
   body.entry.forEach(function(entry) {
 
     let event = entry.messaging[0];
