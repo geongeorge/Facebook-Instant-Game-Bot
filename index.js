@@ -37,6 +37,8 @@ app.post('/webhook', (req, res) => {
         'Congratulations on your victory!', 
         'Play Again'
       );
+
+      res.status(200).send('EVENT_RECEIVED');
     }
 });
 
