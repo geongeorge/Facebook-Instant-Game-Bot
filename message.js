@@ -1,10 +1,10 @@
-const TOKEN = "EAAe4DKO6CD4BADW6yxBVwFNubZBf6a0o6PF9ZBecnxqNLRAGTDrf61OJdgxVPmXG19bA6qLCkiIYpwClpy4VxbgVpFNWFLCZARLNfKBeXmIqyM3qH72XqXZBt5xyQNcC1zy3Huiogy30iRzwU1pXniVI6aEtThPWx9v3L1kRdgZDZD"
+const TOKEN = "EAAe4DKO6CD4BAFZBeLv3TdKyTi9aLf6ynSKh31xtQ0sPyR2XoKfcRMDh7kaw8QcBZAFz4mfgtbkmSOx87sZCGZB8VC0LSR3ZB38S0qT5yQjbaGo9oedKhr4RiZAgLmgf1WKNGFiDny2qUY9ICcGFy3E3d46eKIJn9rb2k3g7QmWgZDZD"
 const API_URL = "https://graph.facebook.com/v2.6/me/messages?access_token="+TOKEN
 
 sendMessage = function(senderId, contextId, msg, btn) {
     let data = {
         "recipient":{
-          "id":enderId
+          "id":senderId
         },
         "message":{
           "text":msg
@@ -30,11 +30,11 @@ sendMessage = function(senderId, contextId, msg, btn) {
 
     .then((response) => {
         console.log(response)
-        dispatch({type: FOUND_USER, data: response.data[0]})
+        // dispatch({type: FOUND_USER, data: response.data[0]})
     })
     .catch((error) => {
         console.log(error)
-        dispatch({type: ERROR_FINDING_USER})
+        // dispatch({type: ERROR_FINDING_USER})
     })
 }
 module.exports.sendMessage = sendMessage
