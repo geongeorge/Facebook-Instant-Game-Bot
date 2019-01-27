@@ -3,12 +3,14 @@ const API_URL = "https://graph.facebook.com/v2.6/me/messages?access_token="+TOKE
 
 const request= require("request")
 
-function sendMessage(player, context, message, cta, payload) {
+function sendMessage(player, message, cta=null,context=null, payload=null) {
     var button = {
         type: "game_play",
-        title: cta
+        title: "Play Game"
     };
-
+    if (cta) {
+        button.title = cta;
+    }
     if (context) {
         button.context = context;
     }
