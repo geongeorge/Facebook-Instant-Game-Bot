@@ -5,7 +5,7 @@ const
   express = require('express'),
   bodyParser = require('body-parser'),
   axios = require('axios'),
-  message = require("./message"),
+  msg = require("./message"),
   app = express().use(bodyParser.json()); // creates express http server
 
 app.get("/",(req,res)=> {
@@ -25,7 +25,7 @@ app.post('/webhook', (req, res) => {
     var contextId = event.game_play.context_id; 
     // var payload = event.game_play.payload;
     // var playerWon = payload['playerWon'];
-    message.sendMessage(
+    msg.sendMessage(
       senderId, 
       contextId, 
       'Congratulations on your victory!', 
