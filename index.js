@@ -93,7 +93,7 @@ app.get('/webhook', (req, res) => {
 const myport = process.env.PORT || 1337;
 
 // Sets server port and logs message on success
-app.listen(myport, () => console.log('new webhook is listening at '+myport));
+app.listen(myport, () => console.log('latest webhook is listening at '+myport));
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
