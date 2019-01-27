@@ -37,11 +37,11 @@ sendMessage = function(playerId, contextId, msg, btn) {
     })
 
     .then((response) => {
-        console.log(response)
+        console.log("Success message sent")
         // dispatch({type: FOUND_USER, data: response.data[0]})
     })
     .catch((error) => {
-        console.log(error)
+        console.log("Error: User not found")
         // dispatch({type: ERROR_FINDING_USER})
     })
 }
