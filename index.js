@@ -39,7 +39,7 @@ app.post('/webhook', (req, res) => {
       //   'Play Again'
       // );
 
-      msg.sendMessage(senderId, "God is Love")
+      msg.sendMessage(senderId, "Play Yoloooo")
 
       res.status(200).send('EVENT_RECEIVED');
     }
