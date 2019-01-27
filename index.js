@@ -16,24 +16,29 @@ app.get("/",(req,res)=> {
   // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
  
-  let event = req.body;
+  let body = req.body;
 
-  console.dir(event, { depth: null })
-  // console.log(event)
+  body.entry.forEach(function(entry) {
 
-  if (event.game_play) {
-    var senderId = event.sender.id; // Messenger sender id
-    var playerId = event.game_play.player_id; // Instant Games player id
-    var contextId = event.game_play.context_id; 
-    // var payload = event.game_play.payload;
-    // var playerWon = payload['playerWon'];
-    msg.sendMessage(
-      senderId, 
-      contextId, 
-      'Congratulations on your victory!', 
-      'Play Again'
-    );
-  }
+    let event = entry.messaging[0];
+
+    console.dir(event, { depth: null })
+    // console.log(event)
+
+    if (event.game_play) {
+      var senderId = event.sender.id; // Messenger sender id
+      var playerId = event.game_play.player_id; // Instant Games player id
+      var contextId = event.game_play.context_id; 
+      // var payload = event.game_play.payload;
+      // var playerWon = payload['playerWon'];
+      msg.sendMessage(
+        senderId, 
+        contextId, 
+        'Congratulations on your victory!', 
+        'Play Again'
+      );
+    }
+});
 
   // // Checks this is an event from a page subscription
   // if (body.object === 'page') {
