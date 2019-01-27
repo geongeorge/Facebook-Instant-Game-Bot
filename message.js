@@ -2,7 +2,7 @@ const TOKEN = "EAAe4DKO6CD4BAK0bdwEX4XgZCppkYFon5Bwfh9TvI87ZCL4Bn9l4c8gx2uK3C8Vv
 const API_URL = "https://graph.facebook.com/v2.6/me/messages?access_token="+TOKEN
 
 const axios = require('axios')
-
+const request = require('request')
 sendMessage = function(playerId, contextId, msg, btn) {
     let data = {
         "recipient":{
