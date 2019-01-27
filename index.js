@@ -15,6 +15,8 @@ app.post('/webhook', (req, res) => {
  
   let body = req.body;
 
+  console.log(body)
+
   // Checks this is an event from a page subscription
   if (body.object === 'page') {
 
@@ -68,4 +70,19 @@ app.get('/webhook', (req, res) => {
 const myport = process.env.PORT || 1337;
 
 // Sets server port and logs message on success
-app.listen(myport, () => console.log('webhook is listening at '+myport));
+app.listen(myport, () => console.log('new webhook is listening at '+myport));
+
+// Handles messages events
+function handleMessage(sender_psid, received_message) {
+
+}
+
+// Handles messaging_postbacks events
+function handlePostback(sender_psid, received_postback) {
+
+}
+
+// Sends response messages via the Send API
+function callSendAPI(sender_psid, response) {
+  
+}
