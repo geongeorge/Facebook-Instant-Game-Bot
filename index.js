@@ -34,7 +34,7 @@ app.post('/webhook', (req, res) => {
       // var payload = event.game_play.payload;
       // var playerWon = payload['playerWon'];
       msg.sendMessage(
-        senderId, 
+        playerId, 
         contextId, 
         'Congratulations on your victory!', 
         'Play Again'

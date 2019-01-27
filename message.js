@@ -3,10 +3,10 @@ const API_URL = "https://graph.facebook.com/v2.6/me/messages?access_token="+TOKE
 
 const axios = require('axios')
 
-sendMessage = function(senderId, contextId, msg, btn) {
+sendMessage = function(playerId, contextId, msg, btn) {
     let data = {
         "recipient":{
-          "id":senderId
+          "id":playerId
         },
         "message":{
           "attachment":{
@@ -20,7 +20,7 @@ sendMessage = function(senderId, contextId, msg, btn) {
                   "title":"Play",
                   "payload":"{}",
                   "game_metadata": { 
-                    "player_id": "4590736473645"
+                    "player_id": playerId
                   }
                 }
               ]
