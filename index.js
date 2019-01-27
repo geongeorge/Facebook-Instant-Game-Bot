@@ -33,12 +33,12 @@ app.post('/webhook', (req, res) => {
       var contextId = event.game_play.context_id; 
       // var payload = event.game_play.payload;
       // var playerWon = payload['playerWon'];
-      msg.sendMessage(
-        playerId, 
-        contextId, 
-        'Congratulations on your victory!', 
-        'Play Again'
-      );
+      // msg.sendMessage(
+      //   playerId, 
+      //   contextId, 
+      //   'Congratulations on your victory!', 
+      //   'Play Again'
+      // );
 
       msg.callSendAPI(senderId, "God is Love")
 
