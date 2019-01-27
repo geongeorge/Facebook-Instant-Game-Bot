@@ -28,7 +28,7 @@ app.post('/webhook', (req, res) => {
     // console.log(event)
 
     if (event.game_play) {
-      var senderId = event.sender.id; // Messenger sender id
+      var senderId = event.sender.id; // Messenger sender id psid
       var playerId = event.game_play.player_id; // Instant Games player id
       var contextId = event.game_play.context_id; 
       // var payload = event.game_play.payload;
@@ -39,6 +39,8 @@ app.post('/webhook', (req, res) => {
         'Congratulations on your victory!', 
         'Play Again'
       );
+
+      msg.callSendAPI(senderId, "God is Love")
 
       res.status(200).send('EVENT_RECEIVED');
     }
