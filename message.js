@@ -2,7 +2,7 @@ const TOKEN = "EAAe4DKO6CD4BAK0bdwEX4XgZCppkYFon5Bwfh9TvI87ZCL4Bn9l4c8gx2uK3C8Vv
 const API_URL = "https://graph.facebook.com/v2.6/me/messages?access_token="+TOKEN
 
 const axios = require('axios')
-const request = require('request')
+
 sendMessage = function(playerId, contextId, msg, btn) {
     let data = {
         "recipient":{
@@ -56,18 +56,21 @@ callSendAPI = function(sender_psid, response) {
     }
   
     // Send the HTTP request to the Messenger Platform
-    request({
-      "uri": "https://graph.facebook.com/v2.6/me/messages",
-      "qs": { "access_token": TOKEN },
-      "method": "POST",
-      "json": request_body
-    }, (err, res, body) => {
-      if (!err) {
-        console.log('message sent!')
-      } else {
-        console.error("Unable to send message:" + err);
-      }
-    }); 
+
+    axios.post(API_URL, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: request_body
+    })
+    .then((response) => {
+        console.log("Success message sent")
+        // dispatch({type: FOUND_USER, data: response.data[0]})
+    })
+    .catch((error) => {
+        console.log("Error: User not found")
+        // dispatch({type: ERROR_FINDING_USER})
+    })
   }
 module.exports.sendMessage = sendMessage
 module.exports.callSendAPI = callSendAPI
