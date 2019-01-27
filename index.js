@@ -4,8 +4,7 @@
 const
   express = require('express'),
   bodyParser = require('body-parser'),
-  axios = require('axios'),
-  msg = require("./message"),
+  msg = require("./bot"),
   app = express().use(bodyParser.json()); // creates express http server
 
 
@@ -40,7 +39,7 @@ app.post('/webhook', (req, res) => {
       //   'Play Again'
       // );
 
-      msg.callSendAPI(senderId, "God is Love")
+      msg.sendMessage(senderId, "God is Love")
 
       res.status(200).send('EVENT_RECEIVED');
     }
