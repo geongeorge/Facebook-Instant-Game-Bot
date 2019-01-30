@@ -5,6 +5,7 @@ const
   express = require('express'),
   bodyParser = require('body-parser'),
   msg = require("./bot"),
+  test = require("./test"),
   app = express().use(bodyParser.json()); // creates express http server
 
 
@@ -17,13 +18,13 @@ app.post('/webhook', (req, res) => {
  
   let body = req.body;
 
-  console.log(body)
+  // console.log(body)
 
   body.entry.forEach(function(entry) {
 
     let event = entry.messaging[0];
 
-    console.dir(event, { depth: null })
+    // console.dir(event, { depth: null })
     // console.log(event)
 
     if (event.game_play) {
@@ -39,7 +40,8 @@ app.post('/webhook', (req, res) => {
       //   'Play Again'
       // );
 
-      msg.sendMessage(senderId, "Play Yoloooo")
+      // msg.sendMessage(senderId, "Play Yoloooo")
+      test.sendMessageList(senderId)
 
       res.status(200).send('EVENT_RECEIVED');
     }
