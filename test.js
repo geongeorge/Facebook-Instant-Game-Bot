@@ -48,7 +48,7 @@ function generateList(playerId, itemList) {
 function generateMsg(playerId){
     return new Promise(function(resolve, reject) {
         request({
-            url: "https://coingeany.com/potato/api/apps",
+            url: "https://coingeany.com/yolo/api/apps",
             method: "GET",
             json: true,
         }, function (error, response, body){
