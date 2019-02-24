@@ -59,7 +59,7 @@ function generateMsg(playerId){
                 let ele = myapps[count]
                 let mylistitem =  generateListItem(ele.title,ele.f_image, ele.id)
                 msgList.push(mylistitem)
-                console.log(mylistitem)
+                // console.log(mylistitem)
                 count++
             }
             var finalList = generateList(playerId,msgList)
@@ -70,7 +70,7 @@ function generateMsg(playerId){
 }
 function sendMessageList(playerId) {
     generateMsg(playerId).then(msgData => {
-        console.log(msgData)
+        // console.log(msgData)
         callSendAPI(msgData)
     })
 }

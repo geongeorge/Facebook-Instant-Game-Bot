@@ -9,10 +9,30 @@ _connect() {
      mongoose.connect(`mongodb://${server}/${database}`)
        .then(() => {
          console.log('Database connection successful')
+         this.userSchema =  new mongoose.Schema({
+            senderId: { type: String , unique: true},
+            contextId: String,
+            playerId: String,
+            subDate: { type: Date, default: Date.now()},
+          });
+          this._model()
        })
        .catch(err => {
          console.error('Database connection error')
        })
   }
+_model() {
+        this.chatSubs = mongoose.model("chatSubs",this.userSchema)
+    }
+    addUser(usr) {
+        this.chatSubs.create(usr,(err,newusr)=> {
+            if(err){
+                console.log("cannot add user")
+            } else {
+                console.log(newusr.senderId+" added")
+            }
+        })
+    }
 }
+
 module.exports = new Database()

@@ -29,7 +29,13 @@ app.post('/webhook', (req, res) => {
     if (event.game_play) {
       var senderId = event.sender.id; // Messenger sender id psid
       var playerId = event.game_play.player_id; // Instant Games player id
-      var contextId = event.game_play.context_id; 
+      var contextId = event.game_play.context_id;
+      
+      db.addUser({
+        senderId,
+        contextId,
+        playerId
+      });
 
       sender.sendMessageList(senderId)
 
