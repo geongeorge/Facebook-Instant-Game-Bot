@@ -4,7 +4,7 @@
 const
   express = require('express'),
   bodyParser = require('body-parser'),
-  msg = require("./bot"),
+  db = require('./parts/database'),
   sender = require("./sender"),
   app = express().use(bodyParser.json()); // creates express http server
 
