@@ -5,18 +5,18 @@ const
   express = require('express'),
   bodyParser = require('body-parser'),
   msg = require("./bot"),
-  test = require("./test"),
+  sender = require("./sender"),
   app = express().use(bodyParser.json()); // creates express http server
 
 
 app.get("/",(req,res)=> {
-    res.send("hello");
+    res.send("Webhook running here <code>/webhook</code>");
 })
 
   // Creates the endpoint for our webhook 
 app.post('/webhook', (req, res) => {  
  
-  let body = req.body;
+  var body = req.body;
 
   // console.log(body)
 
@@ -26,47 +26,18 @@ app.post('/webhook', (req, res) => {
 
     // console.dir(event, { depth: null })
     // console.log(event)
-
     if (event.game_play) {
       var senderId = event.sender.id; // Messenger sender id psid
       var playerId = event.game_play.player_id; // Instant Games player id
       var contextId = event.game_play.context_id; 
-      // var payload = event.game_play.payload;
-      // var playerWon = payload['playerWon'];
-      // msg.sendMessage(
-      //   playerId, 
-      //   contextId, 
-      //   'Congratulations on your victory!', 
-      //   'Play Again'
-      // );
 
-      // msg.sendMessage(senderId, "Play Yoloooo")
-      test.sendMessageList(senderId)
+      sender.sendMessageList(senderId)
 
       res.status(200).send('EVENT_RECEIVED');
     }
+  });
 });
 
-  // // Checks this is an event from a page subscription
-  // if (body.object === 'page') {
-
-  //   // Iterates over each entry - there may be multiple if batched
-  //   body.entry.forEach(function(entry) {
-
-  //     // Gets the message. entry.messaging is an array, but 
-  //     // will only ever contain one message, so we get index 0
-  //     let webhook_event = entry.messaging[0];
-  //     console.log(webhook_event);
-  //   });
-
-  //   // Returns a '200 OK' response to all requests
-  //   res.status(200).send('EVENT_RECEIVED');
-  // } else {
-  //   // Returns a '404 Not Found' if event is not from a page subscription
-  //   res.sendStatus(404);
-  // }
-
-});
 
 
 // Adds support for GET requests to our webhook
@@ -100,38 +71,6 @@ app.get('/webhook', (req, res) => {
 const myport = process.env.PORT || 1337;
 
 // Sets server port and logs message on success
-app.listen(myport, () => console.log('latest webhook is listening at '+myport));
-
-// Handles messages events
-function handleMessage(sender_psid, received_message) {
-
-}
-
-// Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
-
-}
-
-// Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
-  
-}
-
-
-// {
-//   "sender": {
-//     "id": "<PSID>"
-//   },
-//   "recipient": {
-//     "id": "<PAGE_ID>"
-//   },
-//   "timestamp": 1469111400000,
-//   "game_play": {
-//     "game_id": "<GAME-APP-ID>",
-//     "player_id": "<PLAYER-ID>",
-//     "context_type": "<CONTEXT-TYPE:SOLO|THREAD>",
-//     "context_id": "<CONTEXT-ID>", # If a Messenger Thread context
-//     "score": <SCORE-NUM>, # If a classic score based game
-//     "payload": "<PAYLOAD>" # If a rich game
-//   }
-// }
+app.listen(myport, function() {
+  console.log('Webhook up!',"http://localhost:"+myport)
+})
