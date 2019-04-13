@@ -42,9 +42,9 @@ _model() {
   getAllUsers() {
       return new Promise((resolve, reject)=> {
         this.chatSubs.find({
-          // "lastSend" : { 
-          //   $gte: new Date(new Date().setDate(new Date().getDate()-1))
-          // } 
+          "lastSend" : { 
+            $lte: new Date(new Date().setDate(new Date().getDate()-1))
+          } 
         }, (err, docs)=> {
           if(err){
             reject("Cannot get users")

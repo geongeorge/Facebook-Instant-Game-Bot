@@ -44,7 +44,24 @@ function generateList(playerId, itemList) {
 
     return finalList
 }
-
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
 function generateMsg(playerId){
     return new Promise(function(resolve, reject) {
         request({
@@ -52,7 +69,7 @@ function generateMsg(playerId){
             method: "GET",
             json: true,
         }, function (error, response, body){
-            let myapps = response.body.apps
+            let myapps = shuffle(response.body.apps)
             let count = 0;
             var msgList = [];
             while(count<4 && myapps.length>4){

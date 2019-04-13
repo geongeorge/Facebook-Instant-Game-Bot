@@ -87,8 +87,8 @@ app.listen(myport, function() {
 
 var sendingFlag = false;
 
-cron.schedule('*/10 * * * * *', () => {
-    console.log('running a task every 15 minutes')
+cron.schedule('*/20 * * * * *', () => {
+    console.log('running a task every 20 minutes')
     if(sendingFlag) {
       console.log('skipped')
       return
