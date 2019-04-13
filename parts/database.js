@@ -18,6 +18,7 @@ _connect() {
             contextId: String,
             playerId: String,
             subDate: { type: Date, default: Date.now()},
+            lastSend: { type: Date, default: Date.now()},
           });
           this._model()
        })
@@ -36,6 +37,30 @@ _model() {
                 console.log(newusr.senderId+" added")
             }
         })
+    }
+
+  getAllUsers() {
+      return new Promise((resolve, reject)=> {
+        this.chatSubs.find({
+          // "lastSend" : { 
+          //   $gte: new Date(new Date().setDate(new Date().getDate()-1))
+          // } 
+        }, (err, docs)=> {
+          if(err){
+            reject("Cannot get users")
+          } else {
+            console.log(JSON.stringify(docs))
+            resolve(docs)
+          }
+        })
+    });
+    }
+
+    updateUser(senderId) {
+      this.chatSubs.findOne({ senderId: senderId }, function (err, doc){
+        doc.lastSend = Date.now()
+        doc.save();
+      });
     }
 }
 
