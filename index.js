@@ -8,6 +8,8 @@ const
   sender = require("./sender"),
   app = express().use(bodyParser.json()); // creates express http server
 
+var cron = require('node-cron');
+
 
 app.get("/",(req,res)=> {
     res.send("Webhook running here <code>/webhook</code>");
@@ -80,3 +82,27 @@ const myport = process.env.PORT || 1337;
 app.listen(myport, function() {
   console.log('Webhook up!',"http://localhost:"+myport)
 })
+
+//cron job
+
+var sendingFlag = false;
+
+cron.schedule('*/15 * * * *', () => {
+    console.log('running a task every 15 minutes')
+    if(sendingFlag) {
+      console.log('skipped')
+      return
+    }
+
+    sendingFlag = true
+
+    db.getAllUsers().then((users)=>{
+        users.forEach((usr,index) => {
+            console.log("sending msg to "+usr.senderId)
+            sender.sendMessageList(usr.senderId)
+
+            if(index+1==users.length)
+                sendingFlag = false
+        });
+    })
+});

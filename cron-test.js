@@ -4,15 +4,19 @@ const  db = require('./parts/database'),
 
 var sendingFlag = false;
 
-// cron.schedule('*/10 * * * * *', () => {
-//   console.log('running a task every 10 second');
-// });
+cron.schedule('* */15 * * * *', () => {
+    if(sendingFlag) return;
+    console.log('running a task every 15 minutes')
 
-setTimeout(function() {
+    sendingFlag = true
 
-    db.getAllUsers().then((usr)=>{
-        console.log("user: "+usr.senderId)
-        //sender.sendMessageList(usr.senderId)
+    db.getAllUsers().then((users)=>{
+        users.forEach((usr,index) => {
+            console.log("sending msg to "+usr.senderId)
+            sender.sendMessageList(usr.senderId)
+
+            if(index+1==users.length)
+                sendingFlag = false
+        });
     })
-
-},3000)
+});
