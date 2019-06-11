@@ -2,7 +2,7 @@
 
 ## Setup
 
-    You my host multiple or maybe all of your chatbots in the same server using this guide.
+    You may host multiple or maybe all of your chatbots in the same server using this guide.
 
 In order to setup a bot for an instant game using serverpilot follow this:
 
