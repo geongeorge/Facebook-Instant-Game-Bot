@@ -1,5 +1,9 @@
 // 'use strict';
 
+// Your verify token. Should be a random string.
+const VERIFY_TOKEN = "i eat potatos"
+const myport = 1337;
+
 // Imports dependencies and set up http server
 const
   express = require('express'),
@@ -26,12 +30,15 @@ app.post('/webhook', (req, res) => {
 
     let event = entry.messaging[0];
 
-    // console.dir(event, { depth: null })
-    // console.log(event)
-    if (event.game_play) {
+    //if (event.game_play) {
+    if (event.sender.id) { 
+
       var senderId = event.sender.id; // Messenger sender id psid
-      var playerId = event.game_play.player_id; // Instant Games player id
-      var contextId = event.game_play.context_id;
+      //var playerId = event.game_play.player_id; // Instant Games player id
+      //var contextId = event.game_play.context_id;
+
+      var playerId = 000; // Instant Games player id
+      var contextId = 000;
       
       db.addUser({
         senderId,
@@ -51,8 +58,6 @@ app.post('/webhook', (req, res) => {
 // Adds support for GET requests to our webhook
 app.get('/webhook', (req, res) => {
 
-    // Your verify token. Should be a random string.
-    let VERIFY_TOKEN = "i eat potatos"
       
     // Parse the query params
     let mode = req.query['hub.mode'];
@@ -76,7 +81,7 @@ app.get('/webhook', (req, res) => {
     }
   });
 
-const myport = process.env.PORT || 1337;
+
 
 // Sets server port and logs message on success
 app.listen(myport, function() {
@@ -87,7 +92,7 @@ app.listen(myport, function() {
 
 var sendingFlag = false;
 
-cron.schedule('*/20 * * * * *', () => {
+cron.schedule('*/20 * * * *', () => {
     console.log('running a task every 20 minutes')
     if(sendingFlag) {
       console.log('skipped')

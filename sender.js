@@ -1,5 +1,7 @@
 const request= require("request")
 const TOKEN = "EAAe4DKO6CD4BAK0bdwEX4XgZCppkYFon5Bwfh9TvI87ZCL4Bn9l4c8gx2uK3C8Vvt8iLltF6CNGpaHK7XC47jnlqggAlIZAZANMTWkFZCVF2OXTSVp8Uv0PsM5FA2r3rI4RIDm7E9jZBreP9pxKYXkMZClOIZCdVez4oKF4Wg96nYwZDZD"
+const apiUrl = "https://coingeany.com/yolo/api/apps"
+
 function generateListItem(title,image_url, app_id){
     let jsonItem = 
     {
@@ -65,7 +67,7 @@ function shuffle(array) {
 function generateMsg(playerId){
     return new Promise(function(resolve, reject) {
         request({
-            url: "https://coingeany.com/yolo/api/apps",
+            url: apiUrl,
             method: "GET",
             json: true,
         }, function (error, response, body){

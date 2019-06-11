@@ -1,7 +1,7 @@
 let mongoose = require('mongoose');
 const server = '127.0.0.1:27017'; // REPLACE WITH YOUR DB SERVER
 const database = 'chatbot';      // REPLACE WITH YOUR DB NAME
-const appName = 'yolo';
+const appName = 'potato'; //Different name for each app
 class Database {
   constructor() {
     this._connect()
