@@ -2,26 +2,7 @@ const request= require("request")
 const TOKEN = "EAAe4DKO6CD4BAK0bdwEX4XgZCppkYFon5Bwfh9TvI87ZCL4Bn9l4c8gx2uK3C8Vvt8iLltF6CNGpaHK7XC47jnlqggAlIZAZANMTWkFZCVF2OXTSVp8Uv0PsM5FA2r3rI4RIDm7E9jZBreP9pxKYXkMZClOIZCdVez4oKF4Wg96nYwZDZD"
 const apiUrl = "https://coingeany.com/yolo/api/apps"
 
-function generateListItem(title,image_url, app_id){
-    let jsonItem = 
-    {
-        "title": title,
-        "image_url": image_url,
-        "buttons": [
-          {
-              "type":"game_play",
-              "title":"Play",
-              "payload": JSON.stringify({app: app_id}),
-            //   "game_metadata": { 
-            //     "player_id": playerId
-            //   }
-            }
-        ]        
-      }
-      return jsonItem
-}
-
-function generateList(playerId, itemList) {
+function generateStr({playerId, title, image_url,subtitle,app_id}) {
     let finalList = {
         "recipient":{
           "id": playerId
@@ -30,15 +11,24 @@ function generateList(playerId, itemList) {
           "attachment": {
             "type": "template",
             "payload": {
-              "template_type": "list",
-              "top_element_style": "compact",
-              "elements": itemList,
-               "buttons": [
-                {
-                    "type":"game_play",
-                    "title":"Play"
-                }
-              ]  
+                "template_type":"generic",
+              "elements": [
+                       {
+                        "title": title,
+                        "image_url": image_url,
+                        "subtitle": subtitle,
+                        "default_action": {
+                          "type":"game_play",
+                          "payload": JSON.stringify({app: app_id}),
+                        },
+                        "buttons": [{
+                            "type":"game_play",
+                            "title":"Play",
+                          "payload": JSON.stringify({app: app_id}),
+                        }]
+                      },
+
+                    ],  
             }
           }
         }   
@@ -46,6 +36,7 @@ function generateList(playerId, itemList) {
 
     return finalList
 }
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
   
@@ -64,6 +55,8 @@ function shuffle(array) {
   
     return array;
   }
+
+
 function generateMsg(playerId){
     return new Promise(function(resolve, reject) {
         request({
@@ -72,18 +65,18 @@ function generateMsg(playerId){
             json: true,
         }, function (error, response, body){
             let myapps = shuffle(response.body.apps)
-            let count = 0;
-            var msgList = [];
-            while(count<4 && myapps.length>4){
-                let ele = myapps[count]
-                let mylistitem =  generateListItem(ele.title,ele.f_image, ele.id)
-                msgList.push(mylistitem)
-                // console.log(mylistitem)
-                count++
-            }
-            var finalList = generateList(playerId,msgList)
+            
+            let ele = myapps[0]
+            
+            var newMsg = generateStr({
+                playerId,
+              title: ele.title,
+              subtitle: ele.descr,
+              image_url: ele.f_image,
+              app_id: ele.id
+            })
 
-            resolve(finalList)
+            resolve(newMsg)
         });
     });
 }
@@ -106,8 +99,7 @@ function callSendAPI(messageData) {
 }
 
 module.exports = {
-    generateList,
-    generateListItem,
+    generateStr,
     generateMsg,
     sendMessageList,
     callSendAPI
